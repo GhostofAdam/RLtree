@@ -10,10 +10,14 @@
 
   Traditional Decision Tree with 0.9 accuracy on test data.
 
-  ![](E:\summer_research\RLtree\RLtree\tree_images\normal_iris.png)
+  ![](https://github.com/GhostofAdam/RLtree/blob/master/tree_images/normal_iris.png)
 
   
 
-  Reinforce Learning Tree with 0.9 on test data
+  Reinforce Learning Tree with 0.9 on test data.
 
-  ![](E:\summer_research\RLtree\RLtree\tree_images\iris_99.png)
+  ![](https://github.com/GhostofAdam/RLtree/blob/master/tree_images/iris_99.png)
+
+  Training Process
+
+  ![](https://github.com/GhostofAdam/RLtree/blob/master/tree_images/iris.gif)
