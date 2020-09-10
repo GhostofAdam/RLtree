@@ -1,19 +1,48 @@
-## README
+## Readme
 
-* RL Decision Tree framework
+#### Feature Histogram
 
-  Predict the splitting feature of each node, the splitting value is still the value of maximum information gain.
+Right images are the baseline splitting feature histogram, and the right are RL tree.
 
-  Loss is based on REINFORCE, a Policy Gradient method
+Index -2 represents the leaf node.
 
-* Performance on Iris
+It is not true that the RL tree uses much more feature than baseline CART tree.
 
-  Traditional Decision Tree with 0.9 accuracy on test data.
+* breast_cancer
 
-  ![](E:\summer_research\RLtree\RLtree\tree_images\normal_iris.png)
+<figure class="half">
+    <img src="./histogram/breast_cancer.png" figcaption="Baseline" width="350" >
+    <img src="./histogram_RL/breast_cancer.png" figcaption="RL" width="350" >
+</figure>
 
-  
+* german
 
-  Reinforce Learning Tree with 0.9 on test data
+<figure class="half">
+    <img src="./histogram/german.png" title="Baseline" width="350" >
+    <img src="./histogram_RL/german.png" title="RL" width="350" >
+</figure>
 
-  ![](E:\summer_research\RLtree\RLtree\tree_images\iris_99.png)
+* heart
+
+<figure class="half">
+    <img src="./histogram/heart.png" title="Baseline" width="350" >
+    <img src="./histogram_RL/heart.png" title="RL" width="350" >
+</figure>
+
+* pima
+
+<figure class="half">
+    <img src="./histogram/pima.png" title="Baseline" width="350" >
+    <img src="./histogram_RL/pima.png" title="RL" width="350" >
+</figure>
+
+#### A New Tree Policy Network
+
+Inspired by Tree-LSTM.
+
+Policy Network: $F$
+Inputs: Node Embedding $x$, Parent's Topology Embedding: $h_p$
+Outputs: Action $a$, Topology Embedding: $h_{true},h_{false}$
+$$
+h_{true},h_{false},a = F(x,\hat{h_p})
+$$
