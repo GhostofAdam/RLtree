@@ -6,9 +6,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_breast_cancer
 import sklearn
 import seaborn as sns
+<<<<<<< HEAD
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder 
 from draw import drawSklearnTree
+=======
+>>>>>>> refs/remotes/origin/master
 
 def PickleSave(out_file, data):
     fid = open(out_file, 'wb')
@@ -422,6 +425,7 @@ class Bernoulli:
             #    self.features[i, num + j] = self.features[i, j*interval:(j+1)*interval].sum()
             self.label[i] = (self.features[i].sum() >= (num / 2.0))
 
+<<<<<<< HEAD
 class Credit():
 
     def __init__(self):
@@ -450,6 +454,11 @@ class Credit():
 
 
 def load(data, train_percent, valid_percent, noised = False, frac = 0.1):
+=======
+
+
+def load(data, train_percent, valid_percent):
+>>>>>>> refs/remotes/origin/master
     train_num = int(data.features.shape[0] * train_percent)
     valid_num = int(data.features.shape[0] * (train_percent + valid_percent))
     X_train = data.features[:train_num, :]
@@ -460,12 +469,16 @@ def load(data, train_percent, valid_percent, noised = False, frac = 0.1):
     Y_test = data.label[valid_num:]
     data = {}
     data['X_train'] = X_train
+<<<<<<< HEAD
     
     if noised:
         data['Y_train'] = label_noise(Y_train,frac)
     else:
         data['Y_train'] = Y_train
 
+=======
+    data['Y_train'] = Y_train
+>>>>>>> refs/remotes/origin/master
     data['X_valid'] = X_valid
     data['Y_valid'] = Y_valid
     data['X_test'] = X_test
@@ -473,17 +486,24 @@ def load(data, train_percent, valid_percent, noised = False, frac = 0.1):
     #data['split'] = [[0.5]] * X_train.shape[1]
     data['split'] = []
     for i in range(X_train.shape[1]):
+<<<<<<< HEAD
         if (set(X_train[:100, i]) == {0, 1} or set(X_train[:100, i]) == {0} or set(X_train[:100, i]) == {1}):
+=======
+        if (set(X_train[:, i]) == {0, 1} or set(X_train[:, i]) == {0} or set(X_train[:, i]) == {1}):
+>>>>>>> refs/remotes/origin/master
             data['split'].append([0.5])
         else:
             data['split'].append([])
     return data
 
+<<<<<<< HEAD
 def label_noise(y_data,frac=0.1):
     index = np.random.choice(y_data.shape[0],int(y_data.shape[0]*frac),replace=False)
     for i in index:
         y_data[i] = 1 - y_data[i]
     return y_data
+=======
+>>>>>>> refs/remotes/origin/master
 
 def baselineRF(data_name):
     data = PickleLoad(data_name + '.pkl')
@@ -502,6 +522,7 @@ def basicInfo(data_name):
     print ('train: ', (train == 1).sum() / float(train.shape[0]), train.shape[0])
     print ('val: ', (val == 1).sum() / float(val.shape[0]), val.shape[0])
     print ('test: ', (test == 1).sum() / float(test.shape[0]), test.shape[0])
+<<<<<<< HEAD
     #print ('split: ', data['split'])
 
 
@@ -513,6 +534,15 @@ def completeBaseline(data_name, max_depth, min_samples_leaf, noised = False):
     tree = DecisionTreeClassifier(criterion='gini', max_depth=max_depth, min_samples_leaf=min_samples_leaf, random_state=0)
     tree.fit(data['X_train'], data['Y_train'])
     drawSklearnTree(tree, data_name)
+=======
+    print ('split: ', data['split'])
+
+
+def completeBaseline(data_name, max_depth, min_samples_leaf):
+    data = PickleLoad(data_name + '.pkl')
+    tree = DecisionTreeClassifier(criterion='gini', max_depth=max_depth, min_samples_leaf=min_samples_leaf, random_state=0)
+    tree.fit(data['X_train'], data['Y_train'])
+>>>>>>> refs/remotes/origin/master
 
     result = {'valid':{}, 'test':{}}
 
@@ -522,11 +552,18 @@ def completeBaseline(data_name, max_depth, min_samples_leaf, noised = False):
         result[set_type]['acc'] = sklearn.metrics.accuracy_score(data['Y_' + set_type], pred)
         result[set_type]['f1'] = sklearn.metrics.f1_score(data['Y_' + set_type], pred, average='weighted')
         result[set_type]['auc'] = sklearn.metrics.roc_auc_score(data['Y_' + set_type], pred_proba, average='weighted')
+<<<<<<< HEAD
     print(result)
     return result
 
 
 def allBaseline(noised=False):
+=======
+    return result
+
+
+def allBaseline():
+>>>>>>> refs/remotes/origin/master
     baseline = {}
     baseline['pima'] = completeBaseline('pima', 4, 10)
     baseline['heart'] = completeBaseline('heart', 4, 5)
@@ -535,6 +572,7 @@ def allBaseline(noised=False):
     #baseline['chess'] = completeBaseline('chess', 5, 5)
     #baseline['adult'] = completeBaseline('adult', 5, 5)
     #baseline['spam'] = completeBaseline('spam', 5, 5)
+<<<<<<< HEAD
     #baseline['mammo'] = completeBaseline('mammo', 5, 10)
     #baseline['australia'] = completeBaseline('australia', 4, 10)
     #baseline['monk_1'] = completeBaseline('monk_1', 3, 5)
@@ -544,6 +582,16 @@ def allBaseline(noised=False):
 
 
 def generateData(data_name, train_percent, valid_percent, noised = False, frac = 0.1):
+=======
+    baseline['mammo'] = completeBaseline('mammo', 5, 10)
+    baseline['australia'] = completeBaseline('australia', 4, 10)
+    baseline['monk_1'] = completeBaseline('monk_1', 3, 5)
+    baseline['bernoulli'] = completeBaseline('bernoulli', 4, 1)
+    PickleSave('baseline.pkl', baseline)
+
+
+def generateData(data_name, train_percent, valid_percent):
+>>>>>>> refs/remotes/origin/master
     if (data_name == 'adult'):
         data = Adult()
     elif (data_name == 'glass'):
@@ -568,6 +616,7 @@ def generateData(data_name, train_percent, valid_percent, noised = False, frac =
         data = Monk(1)
     elif (data_name == 'bernoulli'):
         data = Bernoulli(num=8)
+<<<<<<< HEAD
     elif (data_name == 'credit'):
         data = Credit()
     if noised:
@@ -577,6 +626,12 @@ def generateData(data_name, train_percent, valid_percent, noised = False, frac =
 
 
 def baselineDT(data_name, noised=False):
+=======
+    PickleSave(data_name + '.pkl', load(data, train_percent, valid_percent))
+
+
+def baselineDT(data_name):
+>>>>>>> refs/remotes/origin/master
     data = PickleLoad(data_name + '.pkl')
     print (data['X_train'].shape[1])
     tree = DecisionTreeClassifier(criterion='gini', max_depth=8, min_samples_leaf=1, random_state=0)
@@ -598,6 +653,7 @@ def baselineDT(data_name, noised=False):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     # data = Credit()
     # print(data.features)
     # print(data.label)
@@ -605,5 +661,10 @@ if __name__ == '__main__':
     allBaseline(False)
 
     data_name = 'credit'
+=======
+    allBaseline()
+
+    data_name = 'german'
+>>>>>>> refs/remotes/origin/master
     print (data_name)
     basicInfo(data_name)

@@ -55,6 +55,10 @@ class Node():
         self.height = height
         self.impurity = 0.0
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
     def searchSplit(self, features, label, split_value_list):
         node_feature = features[self.data_idx, self.split_index]
         node_label = label[self.data_idx]
