@@ -2,13 +2,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
-<<<<<<< HEAD
 import graphviz
 import sklearn
 matplotlib.use('Agg')
-=======
-
->>>>>>> refs/remotes/origin/master
 
 def PickleLoad(in_file):
     fid = open(in_file, 'rb')
@@ -36,11 +32,7 @@ def simpleShow(data_name, metric):
         plt.plot(np.arange(11), [test_bl] * 11, label='test_bl')
         plt.legend()
         plt.title("%s  %s" %(data_name, score))
-<<<<<<< HEAD
         plt.savefig('./figure2/' + data_name + '_' + score + '.png')
-=======
-        plt.savefig('figure2/' + data_name + '_' + score + '.png')
->>>>>>> refs/remotes/origin/master
         #plt.show()
         #plt.close()
 
@@ -78,11 +70,7 @@ def allEpoch(data_name, metric):
         plt.plot(np.arange(length), [test_bl] * length, label='test_bl')
         plt.legend()
         plt.title("%s  %s" %(data_name, score))
-<<<<<<< HEAD
         plt.savefig('./figure2/' + data_name + '_' + score + '.png')
-=======
-        plt.savefig('figure2/' + data_name + '_' + score + '.png')
->>>>>>> refs/remotes/origin/master
         #plt.show()
         #plt.close()
 
@@ -106,7 +94,6 @@ def dataResult(data_name, metric):
     print ('test:', test[idx])
 
 
-<<<<<<< HEAD
 def drawSklearnTree(tree, name):
     dot_data = sklearn.tree.export_graphviz(tree, out_file=None)
     graph = graphviz.Source(dot_data)
@@ -129,21 +116,4 @@ if __name__ == '__main__':
     # dataResult(data_name, metric)
     # #simpleShow(data_name, metric)
     # sampleCurve(data_name, metric)
-=======
-if __name__ == '__main__':
-    '''
-    for data_name in ['pima', 'heart', 'german', 'breast_cancer']:
-    #for data_name in ['mammo', 'australia']:
-        for metric in ['auc']:
-            dataResult(data_name, metric)
-            simpleShow(data_name, metric)
-            #sampleCurve(data_name, metric)
-    '''
-    
-    data_name = 'pima'
-    metric = 'auc'
-    dataResult(data_name, metric)
-    simpleShow(data_name, metric)
-    sampleCurve(data_name, metric)
->>>>>>> refs/remotes/origin/master
     

@@ -2,7 +2,10 @@ from collections import deque
 import math
 import numpy as np
 import sklearn
+<<<<<<< HEAD
 from collections import defaultdict
+=======
+>>>>>>> d9dd64e85637f84e5a49b2c74ee21b90c3309f89
 
 # random sample ratio
 k = 0.8
@@ -56,9 +59,13 @@ class Node():
         self.impurity = 0.0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> refs/remotes/origin/master
+=======
+
+>>>>>>> d9dd64e85637f84e5a49b2c74ee21b90c3309f89
     def searchSplit(self, features, label, split_value_list):
         node_feature = features[self.data_idx, self.split_index]
         node_label = label[self.data_idx]
@@ -143,7 +150,11 @@ class Node():
         return self.classification
 
 
+<<<<<<< HEAD
 def buildTree(index, data, max_depth, min_samples_leaf, min_impurity_split, feature_constrain, shuffle=False):
+=======
+def buildTree(index, data, max_depth, min_samples_leaf, min_impurity_split, shuffle=False):
+>>>>>>> d9dd64e85637f84e5a49b2c74ee21b90c3309f89
     
     features = data['X_train']
     label = data['Y_train']
@@ -170,7 +181,11 @@ def buildTree(index, data, max_depth, min_samples_leaf, min_impurity_split, feat
             node.is_leaf = True
             node.classify(label)
         else:
+<<<<<<< HEAD
             node.split_index = feature_constrain[index[node.index]]
+=======
+            node.split_index = index[node.index]
+>>>>>>> d9dd64e85637f84e5a49b2c74ee21b90c3309f89
             if (node.searchSplit(features, label, data['split'][node.split_index])):
                 left_child, right_child = node.split(features, label)
                 node_deque.extend([left_child, right_child])
@@ -256,6 +271,7 @@ def compare(node1, node2):
         else:
             return False
     else:
+<<<<<<< HEAD
         return False
 
 
@@ -319,3 +335,6 @@ def dotgraphTree(decisionTree):
     lsDot.append('}')
     dot_data = '\n'.join(lsDot)
     return dot_data
+=======
+        return False
+>>>>>>> d9dd64e85637f84e5a49b2c74ee21b90c3309f89

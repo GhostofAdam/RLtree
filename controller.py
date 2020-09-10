@@ -3,11 +3,10 @@ import numpy as np
 from simpleDT import *
 from data import *
 import math
-<<<<<<< HEAD
+
 import graphviz
 from progressbar import *
-=======
->>>>>>> refs/remotes/origin/master
+
 
 # hyperparameters
 # for decision tree
@@ -18,12 +17,10 @@ record_num = 20
 
 
 class Config():
-<<<<<<< HEAD
-    def __init__(self, hidden_size=None, tree_depth=None, lr=0.1, min_samples_leaf=1, iterations=None, feature_constrain=None):
-=======
+
     def __init__(self, option_size=None, hidden_size=None, tree_depth=None, lr=0.1, min_samples_leaf=1, iterations=None):
         self.option_size = option_size
->>>>>>> refs/remotes/origin/master
+
         self.hidden_size = hidden_size
         self.tree_depth = tree_depth
         self.seq_length = (2 ** tree_depth) - 1
@@ -31,10 +28,6 @@ class Config():
         self.min_samples_leaf = min_samples_leaf
         self.iterations = iterations
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
 def calReward(root, data, metric):
     #valid_acc = test(root, data, 'valid', metric=metric, shuffle=False)
     valid_acc = validate(root, data, metric, 5)
@@ -97,12 +90,10 @@ class Controller():
     def __init__(self, config):
 
         # controller config
-<<<<<<< HEAD
-        self.option_size = len(config.feature_constrain)
         self.feature_constrain = config.feature_constrain
-=======
+
         self.option_size = config.option_size
->>>>>>> refs/remotes/origin/master
+
         self.hidden_size = config.hidden_size
         self.seq_length = config.seq_length
         self.lr = config.learning_rate
@@ -129,14 +120,12 @@ class Controller():
                 xs[t] = np.zeros([self.option_size, 1])
                 xs[t][index] = 1
             #hs[t] = np.tanh(np.dot(self.Wxh, xs[t]) + np.dot(self.Whh, hs[t - 1]) + self.bh)
-<<<<<<< HEAD
+
             if t % 2 == 0:
                 hs[t] = np.maximum(np.dot(self.Wxh, xs[t]) + np.dot(self.Whh, -hs[int(t/2)-1]) + self.bh, 0.)
             else:
                 hs[t] = np.maximum(np.dot(self.Wxh, xs[t]) + np.dot(self.Whh, hs[int((t-1)/2)]) + self.bh, 0.)
-=======
-            hs[t] = np.maximum(np.dot(self.Wxh, xs[t]) + np.dot(self.Whh, hs[t - 1]) + self.bh, 0.)
->>>>>>> refs/remotes/origin/master
+
             ys[t] = np.dot(self.Why, hs[t]) + self.by
             ps[t] = np.exp(ys[t] - ys[t].max()) / np.sum(np.exp(ys[t] - ys[t].max()))
             index = np.random.choice(range(self.option_size), p=ps[t].ravel())
@@ -170,14 +159,13 @@ class Controller():
             dhraw = (hs[t] > 0).astype(float) * dh # backprop through relu nonlinearity
             dbh += dhraw
             dWxh += np.dot(dhraw, xs[t].T)
-<<<<<<< HEAD
+
             if t % 2 == 0:
                 dWhh += np.dot(dhraw, -hs[int(t/2)-1].T)
             else:
                 dWhh += np.dot(dhraw, hs[int((t-1)/2)].T)
-=======
-            dWhh += np.dot(dhraw, hs[t-1].T)
->>>>>>> refs/remotes/origin/master
+
+
             dhnext = np.dot((self.Whh).T, dhraw)
         dx_start = np.dot((self.Wxh).T, dhraw)
 
@@ -241,15 +229,10 @@ class Controller():
         iterations /= batch_size
         sample_record = np.zeros([3, int(iterations + 1)])
         top_model = {'valid':{'auc':[], 'f1':[], 'acc':[]}, 'test':{'auc':[], 'f1':[], 'acc':[]}}
-<<<<<<< HEAD
         pbar = ProgressBar().start()
         while (n <= iterations):
             pbar.update(int((n / iterations) * 100))
-=======
-        
-        while (n <= iterations):
 
->>>>>>> refs/remotes/origin/master
             # forward seq_length characters through the net and fetch gradient
             dWxh, dWhh, dWhy, dbh, dby, dx_start, reward = self.backPropagation(data, config, metric)
             # perform parameter update with Adagrad
@@ -272,10 +255,9 @@ class Controller():
             sample_record[:, n] = np.array([temp_train, temp_valid, temp_test])
 
             if (n % (iterations / 10) == 0):
-<<<<<<< HEAD
-=======
+
                 print (n, 'iterations finished')
->>>>>>> refs/remotes/origin/master
+
                 # converge model
                 '''
                 index = self.maxSample()
@@ -286,11 +268,9 @@ class Controller():
                 top_model = score(tree, data, top_model)
 
             n += 1 # iteration counter
-<<<<<<< HEAD
-        pbar.finish()
-=======
 
->>>>>>> refs/remotes/origin/master
+        pbar.finish()
+
         return top_model, sample_record
 
 
@@ -306,11 +286,9 @@ def score(tree, data, result):
 def run(data_name, epoch, metric):
     data = PickleLoad(data_name + '.pkl')
     if (data_name == 'pima'):
-<<<<<<< HEAD
-        config = Config(option_size=8, hidden_size=32, tree_depth=4, lr=3e-4, min_samples_leaf=10, iterations=3000, feature_constrain)
-=======
+
         config = Config(option_size=8, hidden_size=32, tree_depth=4, lr=3e-4, min_samples_leaf=10, iterations=3000)
->>>>>>> refs/remotes/origin/master
+
     elif (data_name == 'breast_cancer'):
         config = Config(option_size=30, hidden_size=64, tree_depth=5, lr=4e-4, min_samples_leaf=5, iterations=5000)
     elif (data_name == 'heart'):
@@ -322,11 +300,9 @@ def run(data_name, epoch, metric):
     elif (data_name == 'chess'):
         config = Config(option_size=36, hidden_size=128, tree_depth=5, lr=0.0002, min_samples_leaf=5, iterations=5000)
     elif (data_name == 'credit'):
-<<<<<<< HEAD
-        config = Config(option_size=64, hidden_size=128, tree_depth=5, lr=1e-3, min_samples_leaf=5, iterations=1000, feature_constrain=[])
-=======
+
         config = Config(option_size=23, hidden_size=64, tree_depth=5, lr=1e-3, min_samples_leaf=5, iterations=10000)
->>>>>>> refs/remotes/origin/master
+
     elif (data_name == 'HTRU'):
         config = Config(option_size=8, hidden_size=32, tree_depth=4, lr=1e-3, min_samples_leaf=5, iterations=2000)
     '''
@@ -349,11 +325,7 @@ def run(data_name, epoch, metric):
 
     for i in range(record_num):
         index = controller.sample()
-<<<<<<< HEAD
         best_tree.append(buildTree(index, data, config.tree_depth, config.min_samples_leaf, min_impurity_split, config.feature_constrain))
-=======
-        best_tree.append(buildTree(index, data, config.tree_depth, config.min_samples_leaf, min_impurity_split))
->>>>>>> refs/remotes/origin/master
         best_result[i] = calReward(best_tree[-1], data, metric)
         EMA += best_result[i]
     EMA /= float(record_num)
@@ -361,7 +333,6 @@ def run(data_name, epoch, metric):
     best_result = best_result[order]
     best_tree = [best_tree[order[i]] for i in range(record_num)]
 
-<<<<<<< HEAD
     
     top_model, sample_record = controller.train(data, config, data_name, epoch, metric, iterations=config.iterations, constrain=config.feature_constrain)
     
@@ -377,16 +348,6 @@ def experiment(metric):
     datasets = ['heart', 'german', 'pima', 'breast_cancer']
     m = [5,5,5,5]
     #datasets = ['credit']
-=======
-    return controller.train(data, config, data_name, epoch, metric, iterations=config.iterations)
-
-
-def experiment(metric):
-    #datasets = ['heart', 'german', 'pima', 'breast_cancer']
-    #m = [5,5,5,5]
-    datasets = ['breast_cancer']
-    m = [3]
->>>>>>> refs/remotes/origin/master
     n = 100
     for i in range(len(datasets)):
         data_name = datasets[i]
@@ -402,9 +363,6 @@ def experiment(metric):
 
 if __name__ == '__main__':
     #run('chess')
-<<<<<<< HEAD
     experiment('acc')
     experiment('f1')
-=======
->>>>>>> refs/remotes/origin/master
     experiment('auc')
