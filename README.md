@@ -2,7 +2,7 @@
 
 #### Feature Histogram
 
-Right images are the baseline splitting feature histogram, and the right are RL tree.
+Left images are the baseline splitting feature histogram, and the right are RL tree.
 
 Index -2 represents the leaf node.
 
